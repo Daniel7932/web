@@ -6,13 +6,7 @@ javascript:(function(){
     var script = document.createElement('script');
     /* ↓↓↓ 下面這行換成你在 raw.githack.com 產生的網址 ↓↓↓ */
     script.src = 'https://shorturl.at/KRKtj'; 
-    /* ↑↑↑↑↑↑ */
-    
-    /* 執行：嘗試在主視窗和所有 iframe 注入 */
-    injectToWindow(window);
-    for (var i = 0; i < window.frames.length; i++) {
-        injectToWindow(window.frames[i]);
-    }
+    /* ↑↑↑↑↑↑ */  
     
     /* 3. 避免重複載入 */
     var old = document.getElementById('my-auto-refresh-script');
