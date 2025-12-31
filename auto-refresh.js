@@ -58,11 +58,10 @@ function injectToWindow(win) {
     } catch(e) {
         /* 忽略跨網域視窗限制 */
     }
-
-    /* 執行：嘗試在主視窗和所有 iframe 注入 */
-    injectToWindow(window);
-    for (var i = 0; i < window.frames.length; i++) {
-        injectToWindow(window.frames[i]);
-    }
 }
 
+/* 執行：嘗試在主視窗和所有 iframe 注入 */
+injectToWindow(window);
+for (var i = 0; i < window.frames.length; i++) {
+    injectToWindow(window.frames[i]);
+}
