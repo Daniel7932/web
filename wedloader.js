@@ -5,7 +5,7 @@ javascript:(function(){
     /* 2. 建立 Script 標籤來載入外部程式碼 */
     var script = document.createElement('script');
     /* ↓↓↓ 下面這行換成你在 raw.githack.com 產生的網址 ↓↓↓ */
-    script.src = 'https://shorturl.at/KRKtj'; 
+    script.src = 'https://raw.githubusercontent.com/Daniel7932/web/refs/heads/main/auto-refresh.js?token=GHSAT0AAAAAADRX3VWRIHX3ZDFSC62REVEA2KU2TAQ'; 
     /* ↑↑↑↑↑↑ */  
     
     /* 3. 避免重複載入 */
