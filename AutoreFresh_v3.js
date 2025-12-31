@@ -49,7 +49,6 @@ javascript:(function(){
                     timer = setInterval(doRefresh, intervalTime);
                     uiBtn.innerText = "⏹ 運行中...";
                     uiBtn.style.backgroundColor = '#444';
-                    alert('✅ 自動檢查已啟動！\n每 ' + (intervalTime/1000/60) + ' 分鐘執行一次。');
                 }
             };
 
@@ -65,4 +64,5 @@ javascript:(function(){
     for (var i = 0; i < window.frames.length; i++) {
         injectToWindow(window.frames[i]);
     }
+
 })();
