@@ -1,5 +1,5 @@
 javascript:(function(){
-    var intervalTime = 30000;
+    var intervalTime = 300000;
     var btnId = 'master-auto-refresh-btn';
     
     function injectToWindow(win) {
@@ -66,3 +66,4 @@ javascript:(function(){
     }
 
 })();
+
