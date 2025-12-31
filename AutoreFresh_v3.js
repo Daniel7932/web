@@ -1,5 +1,5 @@
 javascript:(function(){
-    var intervalTime = 300000;
+    var intervalTime = 30000;
     var btnId = 'master-auto-refresh-btn';
     
     function injectToWindow(win) {
@@ -45,11 +45,11 @@ javascript:(function(){
                     uiBtn.style.backgroundColor = '#000';
                     console.log('⛔ 自動檢查已停止: ' + new Date().toLocaleTimeString());
                 } else {
+                    console.log('✅ 自動檢查已啟動！\n每 ' + (intervalTime/1000/60) + ' 分鐘執行一次。 (' + new Date().toLocaleTimeString() + ')');
                     doRefresh();
                     timer = setInterval(doRefresh, intervalTime);
                     uiBtn.innerText = "⏹ 運行中...";
                     uiBtn.style.backgroundColor = '#444';
-                    console.log('✅ 自動檢查已啟動！\n每 ' + (intervalTime/1000/60) + ' 分鐘執行一次。 (' + new Date().toLocaleTimeString() + ')');
                 }
             };
 
@@ -68,5 +68,6 @@ javascript:(function(){
     }
 
 })();
+
 
 
