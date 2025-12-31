@@ -45,7 +45,7 @@ javascript:(function(){
                     uiBtn.style.backgroundColor = '#000';
                     console.log('⛔ 自動檢查已停止: ' + new Date().toLocaleTimeString());
                 } else {
-                    console.log('✅ 自動檢查已啟動！\n每 ' + (intervalTime/1000/60) + ' 分鐘執行一次。 (' + new Date().toLocaleTimeString() + ')');
+                    console.log('✅ 自動檢查已啟動！ 每 ' + (intervalTime/1000/60) + ' 分鐘執行一次。 (' + new Date().toLocaleTimeString() + ')');
                     doRefresh();
                     timer = setInterval(doRefresh, intervalTime);
                     uiBtn.innerText = "⏹ 運行中...";
@@ -68,6 +68,7 @@ javascript:(function(){
     }
 
 })();
+
 
 
 
