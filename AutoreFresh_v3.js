@@ -34,7 +34,7 @@ javascript:(function(){
                     console.log('✅ 已觸發檢查新信 (透過 SC 物件): ' + new Date().toLocaleTimeString());
                 } else {
                     uiBtn.style.backgroundColor = 'red';
-                    console.log('❌ 找不到檢查新信按鈕' + new Date().toLocaleTimeString());
+                    console.log('❌ 找不到檢查新信按鈕: ' + new Date().toLocaleTimeString());
                 }
             };
 
@@ -43,18 +43,19 @@ javascript:(function(){
                     clearInterval(timer); timer = null;
                     uiBtn.innerText = "▶ 啟動自動收信";
                     uiBtn.style.backgroundColor = '#000';
-                    console.log('⛔ 自動檢查已停止' + new Date().toLocaleTimeString());
+                    console.log('⛔ 自動檢查已停止: ' + new Date().toLocaleTimeString());
                 } else {
                     doRefresh();
                     timer = setInterval(doRefresh, intervalTime);
                     uiBtn.innerText = "⏹ 運行中...";
                     uiBtn.style.backgroundColor = '#444';
-                    console.log('✅ 自動檢查已啟動！\n每 ' + (intervalTime/1000/60) + ' 分鐘執行一次。' + new Date().toLocaleTimeString());
+                    console.log('✅ 自動檢查已啟動！\n每 ' + (intervalTime/1000/60) + ' 分鐘執行一次。 (' + new Date().toLocaleTimeString() + ')');
                 }
             };
 
             win.document.body.appendChild(uiBtn);
-            console.log('✅ 已在視窗 ' + win.location.href + ' 插入按鈕' + new Date().toLocaleTimeString());
+            console.log('✅ 已在視窗 ' + win.location.href + ' 插入按鈕: ' + new Date().toLocaleTimeString());
+            
         } catch(e) {
             /* 忽略跨網域視窗限制 */
         }
