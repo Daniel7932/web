@@ -1,5 +1,5 @@
 javascript:(function(){
-    var scriptUrl = '把你的_RAW_連結_貼在這裡';
+    var scriptUrl = 'https://raw.githubusercontent.com/Daniel7932/web/refs/heads/main/AutoRefresh_v4.js?token=GHSAT0AAAAAADRX3VWQU43FOBVIIX5BVWME2K4YKNA';
     
     /* 加入時間戳記避免瀏覽器快取舊程式碼 */
     var nocacheUrl = scriptUrl + '?t=' + new Date().getTime();
