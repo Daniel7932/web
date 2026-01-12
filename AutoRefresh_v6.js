@@ -13,7 +13,7 @@
     /* --- 設定區 --- */
     var intervalTime = 300000; // 5分鐘 (毫秒)
     var btnId = 'master-auto-refresh-btn';
-    var lastUnreadCount = 0;   // 用來記錄上次的未讀數量，避免重複通知
+    var lastUnreadCount = 0; // 用來記錄上次的未讀數量，避免重複通知
 
     /* 1. 請求通知權限 (首次執行會詢問) */
     if (Notification.permission !== "granted") {
@@ -38,7 +38,7 @@
             /* 防止重複注入 */
             if (win.document.getElementById(btnId)) return;
 
-            /* 定義：檢查未讀數量的邏輯 */
+/* 定義：檢查未讀數量的邏輯 (修改為偵測「未讀取」) */
             function checkUnreadEmails() {
                 // 搜尋該視窗內所有的 <nobr> 標籤
                 var allNobrs = win.document.querySelectorAll('nobr');
@@ -46,31 +46,32 @@
 
                 for (var i = 0; i < allNobrs.length; i++) {
                     var el = allNobrs[i];
-                    // 條件：文字包含 "未讀取"
-                    if (el.innerText && el.innerText.indexOf("未讀取") !== -1) {
+
+                    // --- 修改重點：這裡改成偵測 "未讀取" ---
+                    // 為了保險，我加了 trim() 去除前後空白
+                    var text = el.innerText.trim();
+
+                    if (text && text.indexOf("未讀取") !== -1) {
                         found = true;
 
-                        // 嘗試抓取裡面的 <b>(數字)</b>
-                        var bTag = el.querySelector('b');
+                        // 優化邏輯：嘗試直接從整段文字中抓取括號內的數字
+                        // 這樣無論數字有沒有被 <b> 包起來，都能抓得到
+                        // Regex 意思：抓取所有非數字字元之後的數字
+                        var match = text.match(/\((\d+)\)/);
 
-                        if (bTag) {
-                            // 抓到了！取出數字 (過濾掉非數字的括號)
-                            var numText = bTag.innerText.replace(/[^\d]/g, '');
-                            var currentCount = parseInt(numText, 10);
+                        if (match && match[1]) {
+                            var currentCount = parseInt(match[1], 10);
 
-                            console.log("📬 偵測到收件匣未讀數量: " + currentCount);
+                            console.log("📬 偵測到[未讀取]數量: " + currentCount);
 
-                            // 邏輯：如果有未讀信件，且數量比上次多 (或是第一次偵測)
                             if (currentCount > 0) {
-                                // 這裡可以決定：是否每次有未讀都通知，還是只有「變多」才通知
-                                // 目前設定：只要大於 0 就通知 (確保您不會漏看)
                                 sendNotification(currentCount);
                             }
                         } else {
-                            // 有找到收件匣，但沒有 <b> 標籤 -> 代表數量為 0
-                            console.log("📭 收件匣目前沒有未讀信件");
+                            // 雖然找到了 "未讀取" 這個字，但找不到括號數字，通常代表 0
+                            console.log("📭 [未讀取] 目前顯示無數字 (視為 0)");
                         }
-                        break; // 找到收件匣就可以收工了
+                        break; // 找到目標就收工
                     }
                 }
                 return found;
