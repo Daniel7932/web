@@ -1,3 +1,12 @@
+// ==UserScript==
+// @name         webmailRefresh
+// @version      2026-01-06
+// @description  own
+// @author       Daniel
+// @match        https://webmail.tbts.edu.tw/webmail
+// @grant        none
+// ==/UserScript==
+
 javascript:(function(){
     var intervalTime = 300000;
     var btnId = 'master-auto-refresh-btn';
@@ -68,6 +77,7 @@ javascript:(function(){
     }
 
 })();
+
 
 
 
