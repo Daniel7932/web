@@ -1,10 +1,9 @@
 // ==UserScript==
-// @name         Webmail Auto Refresh & Notify
-// @namespace    http://tampermonkey.net/
-// @version      3.0
+// @name         webmailRefresh
+// @version      6.0
 // @description  自動收信 + 辨識未讀數量並發送通知
 // @author       Daniel
-// @match        https://webmail.tbts.edu.tw/*
+// @match        https://webmail.tbts.edu.tw/webmail
 // @grant        none
 // ==/UserScript==
 
@@ -50,15 +49,15 @@
                     // 條件：文字包含 "收件匣"
                     if (el.innerText && el.innerText.indexOf("收件匣") !== -1) {
                         found = true;
-                        
+
                         // 嘗試抓取裡面的 <b>(數字)</b>
                         var bTag = el.querySelector('b');
-                        
+
                         if (bTag) {
                             // 抓到了！取出數字 (過濾掉非數字的括號)
                             var numText = bTag.innerText.replace(/[^\d]/g, '');
                             var currentCount = parseInt(numText, 10);
-                            
+
                             console.log("📬 偵測到收件匣未讀數量: " + currentCount);
 
                             // 邏輯：如果有未讀信件，且數量比上次多 (或是第一次偵測)
@@ -81,11 +80,11 @@
             var timer = null;
             var uiBtn = win.document.createElement('button');
             uiBtn.id = btnId;
-            uiBtn.innerText = "▶ 啟動監控";
-            
+            uiBtn.innerText = "▶ 啟動系統";
+
             var s = uiBtn.style;
-            s.position = 'fixed'; s.top = '10px'; s.right = '10px';
-            s.zIndex = '2147483647'; s.padding = '10px 15px';
+            s.position = 'fixed'; s.top = '28px'; s.right = '10px';
+            s.zIndex = '2147483647'; s.padding = '5px 10px';
             s.backgroundColor = '#222'; s.color = '#fff';
             s.border = '2px solid #FFD700'; s.borderRadius = '5px';
             s.cursor = 'pointer'; s.fontSize = '13px'; s.fontWeight = 'bold';
@@ -93,20 +92,20 @@
 
             /* 定義：自動重新整理與檢查流程 */
             var doRefresh = function() {
-                var target = win.document.querySelector('[aria-label="檢查新信"]') || win.isc_ToolStripButton_12;
-                
-                if (target) {
+               /* var target = win.document.querySelector('[aria-label="檢查新信"]') || win.isc_ToolStripButton_12; */
+
+                if (window.isc_ToolStripButton_12) {
                     // 1. 執行點擊
-                    target.click();
+                    isc_ToolStripButton_12.click();
                     uiBtn.style.backgroundColor = '#28a745'; // 變綠
                     uiBtn.innerText = "⟳ 收信中...";
                     console.log('✅ 觸發收信: ' + new Date().toLocaleTimeString());
 
                     // 2. 延遲 5 秒，等待網頁讀取完成後，再檢查未讀數字
                     setTimeout(function(){
-                        uiBtn.style.backgroundColor = '#444'; 
-                        uiBtn.innerText = "⏹ 監控中";
-                        
+                        uiBtn.style.backgroundColor = '#444';
+                        uiBtn.innerText = "⏹ 運行中";
+
                         // 執行檢查
                         checkUnreadEmails();
                     }, 5000); // 這裡設定 5 秒，如果網頁跑比較慢可調大
@@ -122,16 +121,16 @@
             uiBtn.onclick = function() {
                 if (timer) {
                     clearInterval(timer); timer = null;
-                    uiBtn.innerText = "▶ 啟動監控";
+                    uiBtn.innerText = "▶ 啟動系統";
                     uiBtn.style.backgroundColor = '#222';
                     uiBtn.style.border = '2px solid #FFD700';
                 } else {
                     doRefresh(); // 立即執行一次
                     timer = setInterval(doRefresh, intervalTime);
-                    uiBtn.innerText = "⏹ 監控中";
+                    uiBtn.innerText = "⏹ 運行中";
                     uiBtn.style.backgroundColor = '#444';
                     uiBtn.style.border = '2px solid #0f0';
-                    
+
                     // 首次啟動順便請求權限
                     if (Notification.permission !== "granted") Notification.requestPermission();
                 }
