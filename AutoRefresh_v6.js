@@ -46,8 +46,8 @@
 
                 for (var i = 0; i < allNobrs.length; i++) {
                     var el = allNobrs[i];
-                    // 條件：文字包含 "收件匣"
-                    if (el.innerText && el.innerText.indexOf("收件匣") !== -1) {
+                    // 條件：文字包含 "未讀取"
+                    if (el.innerText && el.innerText.indexOf("未讀取") !== -1) {
                         found = true;
 
                         // 嘗試抓取裡面的 <b>(數字)</b>
